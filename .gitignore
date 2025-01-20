@@ -5,3 +5,4 @@
 .terraform
 jakub.tfvars
 .vscode
+/.idea

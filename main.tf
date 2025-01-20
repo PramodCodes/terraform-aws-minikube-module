@@ -128,26 +128,44 @@ resource "aws_key_pair" "minikube_keypair" {
 # EC2 instance
 #####
 
+# data "aws_ami" "centos7" {
+#   most_recent = true
+#   owners = ["aws-marketplace"]
+#
+#   filter {
+#     name = "product-code"
+#     values = ["aw0evgkw8e5c1q413zgy5pjce", "cvugziknvmxgqna9noibqnnsy"]
+#   }
+#
+#   filter {
+#     name = "architecture"
+#     values = ["x86_64"]
+#   }
+#
+#   filter {
+#     name = "virtualization-type"
+#     values = ["hvm"]
+#   }
+# }
+# the following will return an instance of centos 8 but i dont want to rename instances of code
 data "aws_ami" "centos7" {
-  most_recent = true
-  owners = ["aws-marketplace"]
+    owners = ["973714476881"]
+    most_recent = true
 
-  filter {
-    name = "product-code"
-    values = ["aw0evgkw8e5c1q413zgy5pjce", "cvugziknvmxgqna9noibqnnsy"]
-  }
+     filter {
+    name   = "name"
+    values = ["Centos-8-DevOps-Practice"]
+    }
+    filter {
+    name   = "root-device-type"
+    values = ["ebs"]
+    }
 
-  filter {
-    name = "architecture"
-    values = ["x86_64"]
-  }
-
-  filter {
-    name = "virtualization-type"
+    filter {
+    name   = "virtualization-type"
     values = ["hvm"]
-  }
+    }
 }
-
 resource "aws_eip" "minikube" {
   vpc = true
 }
