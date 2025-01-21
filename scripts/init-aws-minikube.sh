@@ -28,9 +28,22 @@ DNS_NAME=$(echo "$DNS_NAME" | tr 'A-Z' 'a-z')
 # Disable SELinux
 ########################################
 ########################################
-setenforce 0
+echo "disabling SELINUX"
+if command -v setenforce >/dev/null 2>&1; then
+  setenforce 0 2>/dev/null || echo "SELinux is already disabled or setenforce is not supported."
+else
+  echo "setenforce command not found, skipping SELinux enforcement changes."
+fi
+
+# Update SELinux configuration files to disable SELinux permanently
+if [ -f /etc/sysconfig/selinux ]; then
 sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/sysconfig/selinux
+fi
+
+if [ -f /etc/selinux/config ]; then
 sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
+fi
+
 
 ########################################
 ########################################
