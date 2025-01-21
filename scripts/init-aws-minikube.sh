@@ -226,3 +226,12 @@ do
   kubectl apply -f /tmp/addon.yaml
   rm /tmp/addon.yaml
 done
+
+########################################
+########################################
+# copy kubeconfig
+########################################
+########################################
+mkdir .kube
+cp /home/centos/kubeconfig /home/centos/.kube/config
+echo "Configuration succeeded"
